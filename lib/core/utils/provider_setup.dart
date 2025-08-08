@@ -1,0 +1,13 @@
+import 'package:marshal_test_app/modules/splash/controllers/splash_controller.dart';
+import 'package:provider/single_child_widget.dart';
+import 'package:provider/provider.dart';
+
+class ProviderSetup {
+  List<SingleChildWidget> getProviders() {
+    return [
+      ChangeNotifierProvider(
+        create: (context) => SplashController(),
+      ),
+    ];
+  }
+}

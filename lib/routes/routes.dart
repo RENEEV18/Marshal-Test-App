@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marshal_test_app/modules/auth/presentation/pages/login.dart';
+import 'package:marshal_test_app/modules/home/presentation/pages/home.dart';
 import 'package:marshal_test_app/modules/splash/pages/splash.dart';
 import 'package:marshal_test_app/routes/route_constants.dart';
 
@@ -12,6 +13,9 @@ class AppRoutes {
       // App Routes for login
       case AppRouteConstants.loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+      // App Routes for home
+      case AppRouteConstants.homeRoute:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
       // App Routes for default
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());

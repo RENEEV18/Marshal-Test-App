@@ -3,4 +3,6 @@ class AppRouteConstants {
   static const splashRoute = '/';
   // Routes For Auth Module
   static const loginRoute = '/login';
+  // Routes For Home Module
+  static const homeRoute = '/home';
 }

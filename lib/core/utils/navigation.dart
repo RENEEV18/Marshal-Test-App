@@ -5,7 +5,7 @@ class AppNavigation {
     Navigator.of(context).pushNamed(route);
   }
 
-  void pushReplacement({required BuildContext context, required String route}) {
-    Navigator.of(context).pushReplacementNamed(route);
+  void pushNamedRemoveUntil({required BuildContext context, required String route}) {
+    Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
   }
 }

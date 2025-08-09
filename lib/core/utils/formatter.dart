@@ -4,6 +4,9 @@ class HelperFunction {
     if (value == null || value.isEmpty || value == 'null' || value == 'Null') {
       return 'No data';
     } else {
+      if (value == 'null null') {
+        return 'Unknown';
+      }
       return value;
     }
   }

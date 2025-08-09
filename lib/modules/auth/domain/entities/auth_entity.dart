@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:marshal_test_app/modules/auth/data/models/login_response_model.dart';
+import 'package:marshal_test_app/modules/auth/data/models/get_user_model.dart';
 
 class AuthEntity {
   final bool isLoginLoading;
-  final LoginResponseModel loginList;
+  final bool isUserLoading;
+  final GetUserModel? getUserList;
   final TextEditingController usernameController;
   final TextEditingController passwordController;
   final bool isUsername;
@@ -11,7 +12,8 @@ class AuthEntity {
 
   const AuthEntity({
     required this.isLoginLoading,
-    required this.loginList,
+    required this.isUserLoading,
+    required this.getUserList,
     required this.usernameController,
     required this.passwordController,
     required this.isUsername,
@@ -22,7 +24,8 @@ class AuthEntity {
   factory AuthEntity.initial() {
     return AuthEntity(
       isLoginLoading: false,
-      loginList: LoginResponseModel(),
+      isUserLoading: false,
+      getUserList: GetUserModel(),
       usernameController: TextEditingController(),
       passwordController: TextEditingController(),
       isUsername: false,
@@ -33,7 +36,8 @@ class AuthEntity {
   /// CopyWith method for immutability
   AuthEntity copyWith({
     bool? isLoginLoading,
-    LoginResponseModel? loginList,
+    bool? isUserLoading,
+    GetUserModel? getUserList,
     TextEditingController? usernameController,
     TextEditingController? passwordController,
     bool? isUsername,
@@ -41,7 +45,8 @@ class AuthEntity {
   }) {
     return AuthEntity(
       isLoginLoading: isLoginLoading ?? this.isLoginLoading,
-      loginList: loginList ?? this.loginList,
+      isUserLoading: isUserLoading ?? this.isUserLoading,
+      getUserList: getUserList ?? this.getUserList,
       usernameController: usernameController ?? this.usernameController,
       passwordController: passwordController ?? this.passwordController,
       isUsername: isUsername ?? this.isUsername,

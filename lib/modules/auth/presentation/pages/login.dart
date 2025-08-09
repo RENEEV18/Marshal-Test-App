@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:marshal_test_app/core/const/colors/colors.dart';
 import 'package:marshal_test_app/core/const/images/images.dart';
 import 'package:marshal_test_app/core/const/styles/styles.dart';
-import 'package:marshal_test_app/core/utils/textforms.dart';
+import 'package:marshal_test_app/core/utils/widgets/textforms.dart';
 import 'package:marshal_test_app/modules/auth/presentation/controllers/login_controller.dart';
 import 'package:provider/provider.dart';
 

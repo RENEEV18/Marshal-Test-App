@@ -6,4 +6,6 @@ class AppConfig {
 class AppEndpoints {
   // Auth Endpoints
   static const login = 'login';
+  static const getUser = 'me';
+  static const refreshToken = 'refresh';
 }

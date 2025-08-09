@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marshal_test_app/core/const/images/images.dart';
 import 'package:marshal_test_app/core/const/styles/styles.dart';
-import 'package:marshal_test_app/core/utils/loader.dart';
+import 'package:marshal_test_app/core/utils/widgets/loader.dart';
 import 'package:marshal_test_app/modules/splash/controllers/splash_controller.dart';
 import 'package:provider/provider.dart';
 

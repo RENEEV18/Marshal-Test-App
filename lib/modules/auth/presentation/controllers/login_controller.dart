@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:marshal_test_app/core/utils/errors/error.dart';
 import 'package:marshal_test_app/core/utils/formatter.dart';
@@ -39,21 +38,23 @@ class LoginController extends ChangeNotifier {
 
   // Controller function for login
   Future<void> loginFn({required BuildContext context}) async {
-    _state = _state.copyWith(
-      isLoginLoading: true,
+    _updateState(
+      _state.copyWith(
+        isLoginLoading: true,
+      ),
     );
-    notifyListeners();
     try {
       await _authRepo.loginRepo(body: {
         "username": HelperFunction.checkValue(state.usernameController.text),
         "password": HelperFunction.checkValue(state.passwordController.text),
       }).then(
         (value) {
-          _state = _state.copyWith(
-            isLoginLoading: false,
-            loginList: value,
+          _updateState(
+            _state.copyWith(
+              isLoginLoading: false,
+            ),
           );
-          log("Api Success : ${state.loginList}\nAccess Token : ${PrefsService.prefs.getString("accessTokenKey")}\nRefresh Token : ${PrefsService.prefs.getString("refreshTokenKey")}");
+          log("Api Success : ${value.firstName}\nAccess Token : ${PrefsService.prefs.getString("accessTokenKey")}\nRefresh Token : ${PrefsService.prefs.getString("refreshTokenKey")}");
           if (!context.mounted) return;
           AppSnackbar.show(
             context,
@@ -67,7 +68,39 @@ class LoginController extends ChangeNotifier {
       if (!context.mounted) return;
       _handleError(context, error);
     } finally {
-      _updateState(_state.copyWith(isLoginLoading: false));
+      _updateState(
+        _state.copyWith(isLoginLoading: false),
+      );
+      notifyListeners();
+    }
+  }
+
+  // Controller function for getting user profile
+  Future<void> getUserProfile({required BuildContext context}) async {
+    _updateState(
+      _state.copyWith(
+        isUserLoading: true,
+      ),
+    );
+    try {
+      await _authRepo.getUserRepo().then(
+        (value) {
+          _updateState(
+            _state.copyWith(
+              isUserLoading: false,
+              getUserList: value,
+            ),
+          );
+          log("Api Success : $value");
+        },
+      );
+    } catch (error) {
+      if (!context.mounted) return;
+      _handleError(context, error);
+    } finally {
+      _updateState(
+        _state.copyWith(isUserLoading: false),
+      );
       notifyListeners();
     }
   }
@@ -89,17 +122,16 @@ class LoginController extends ChangeNotifier {
   void onAuthFieldChange({required String? value, required String type}) {
     if (value == null || value.isEmpty) {
       if (type == "username") {
-        _state = _state.copyWith(isUsername: false);
+        _updateState(_state.copyWith(isUsername: false));
       } else {
-        _state = _state.copyWith(isPassword: false);
+        _updateState(_state.copyWith(isPassword: false));
       }
     } else {
       if (type == "username") {
-        _state = _state.copyWith(isUsername: true);
+        _updateState(_state.copyWith(isUsername: true));
       } else {
-        _state = _state.copyWith(isPassword: true);
+        _updateState(_state.copyWith(isPassword: true));
       }
     }
-    notifyListeners();
   }
 }

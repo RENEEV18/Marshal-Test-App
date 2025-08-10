@@ -3,6 +3,7 @@ import 'package:marshal_test_app/core/const/colors/colors.dart';
 import 'package:marshal_test_app/core/const/images/images.dart';
 import 'package:marshal_test_app/core/utils/widgets/listview.dart';
 import 'package:marshal_test_app/modules/home/presentation/controllers/home_controllers.dart';
+import 'package:marshal_test_app/modules/home/presentation/pages/device_info_page/battery_info.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -77,7 +78,12 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           body: SafeArea(
-            child: home.pages[home.state.selectedIndex],
+            child: Stack(
+              children: [
+                home.pages[home.state.selectedIndex],
+                BatteryInfo(),
+              ],
+            ),
           ),
         );
       },

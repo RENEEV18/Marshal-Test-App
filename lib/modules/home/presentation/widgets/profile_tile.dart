@@ -3,22 +3,24 @@ import 'package:marshal_test_app/core/const/colors/colors.dart';
 import 'package:marshal_test_app/core/utils/widgets/listview.dart';
 
 class ProfileInfoTile extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
   final String label;
   final String value;
+  final Color? borderColor;
 
   const ProfileInfoTile({
     super.key,
-    required this.icon,
+    this.icon,
     required this.label,
     required this.value,
+    this.borderColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return CommonListTile(
       elevation: 0,
-      borderColor: AppColors.primaryBlack.withValues(alpha: 0.04),
+      borderColor: borderColor ?? AppColors.primaryBlack.withValues(alpha: 0.04),
       contentPadding: EdgeInsets.symmetric(horizontal: 12),
       leading: CircleAvatar(
         child: Icon(

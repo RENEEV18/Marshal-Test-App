@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marshal_test_app/core/services/method_channel_service.dart';
 import 'package:marshal_test_app/core/utils/navigation.dart';
 import 'package:marshal_test_app/modules/home/domain/entities/home_entity.dart';
 import 'package:marshal_test_app/modules/home/presentation/pages/device_info_page/device_info_page.dart';
@@ -39,5 +40,17 @@ class HomeControllers extends ChangeNotifier {
       _state.copyWith(selectedIndex: index),
     );
     AppNavigation().pop(context: context);
+  }
+
+  // Method Channel Functions----------------
+  // Function for fetching device info
+  Future<void> getDeviceInfo() async {
+    final info = await MethodChannelService.getDeviceInfo();
+    _updateState(
+      _state.copyWith(
+        isDeviceLoading: false,
+        deviceInfo: info,
+      ),
+    );
   }
 }

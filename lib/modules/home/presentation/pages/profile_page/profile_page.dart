@@ -45,7 +45,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [Text("No data found! Something went wrong")],
                   )
                 : SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
                     child: Column(
                       children: [
                         Container(
@@ -54,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              AppStyle.kHeight10,
+                              AppStyle.kHeight30,
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(30),
                                 child: Image.network(
@@ -111,7 +110,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         AppStyle.kHeight15,
                         Padding(
-                          padding: AppPadding.scaffoldPadding,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: 15,
+                          ),
                           child: Column(
                             spacing: 15,
                             children: [
@@ -119,32 +121,38 @@ class _ProfilePageState extends State<ProfilePage> {
                                 icon: Icons.person,
                                 label: "Username",
                                 value: login.state.getUserList?.username ?? "",
+                                borderColor: Colors.transparent,
                               ),
                               ProfileInfoTile(
                                 icon: Icons.phone,
                                 label: "Phone",
                                 value: login.state.getUserList?.phone ?? "",
+                                borderColor: Colors.transparent,
                               ),
                               ProfileInfoTile(
                                 icon: Icons.location_on,
                                 label: "Address",
                                 value:
                                     "${login.state.getUserList?.address?.address ?? ''}, ${login.state.getUserList?.address?.city ?? ''}, ${login.state.getUserList?.address?.state ?? ''}",
+                                borderColor: Colors.transparent,
                               ),
                               ProfileInfoTile(
                                 icon: Icons.work,
                                 label: "Occupation",
                                 value: login.state.getUserList?.company?.title ?? "",
+                                borderColor: Colors.transparent,
                               ),
                               ProfileInfoTile(
                                 icon: Icons.school,
                                 label: "University",
                                 value: login.state.getUserList?.university ?? "",
+                                borderColor: Colors.transparent,
                               ),
                               ProfileInfoTile(
                                 icon: Icons.cake,
                                 label: "Date of Birth",
                                 value: login.state.getUserList?.birthDate ?? "",
+                                borderColor: Colors.transparent,
                               ),
                             ],
                           ),

@@ -41,12 +41,31 @@ class HomeRepoImpl extends HomeServices implements HomeRepo {
 
   // Repo function to search recipe
   @override
-  Future<GetRecipeModel> searchRecipeRepo({required int limit, required String query}) async {
+  Future<GetRecipeModel> searchRecipeRepo({required int limit, required String query, required int skip}) async {
     try {
-      final response = await searchRecipeService(limit: limit, query: query);
+      final response = await searchRecipeService(limit: limit, query: query, skip: skip);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final data = jsonDecode(response.body);
         return GetRecipeModel.fromJson(data);
+      } else {
+        throw ApiErrors.handleApiError(response);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Repo function to update recipe
+  @override
+  Future<GetRecipeDetailsModel> updateRecipeRepo({
+    required int recipeId,
+    required Map<String, dynamic> body,
+  }) async {
+    try {
+      final response = await updateRecipeService(id: recipeId, body: body);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        final data = jsonDecode(response.body);
+        return GetRecipeDetailsModel.fromJson(data);
       } else {
         throw ApiErrors.handleApiError(response);
       }

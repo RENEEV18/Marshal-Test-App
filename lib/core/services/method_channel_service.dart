@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/services.dart';
 
 class MethodChannelService {
@@ -7,6 +6,8 @@ class MethodChannelService {
   static const MethodChannel _methodChannel = MethodChannel('com.example.marshal_test_app/device_info');
   // Initialise event channel for fetching live battery
   static const EventChannel _eventChannel = EventChannel('com.example.marshal_test_app/battery');
+  // Initialise channel for image picking
+  static const MethodChannel _imagePickerChannel = MethodChannel('com.example.marshal_test_app/image_picker');
 
   // Fuction for device and app info
   static Future<Map<String, dynamic>> getDeviceInfo() async {
@@ -35,5 +36,16 @@ class MethodChannelService {
       }
       return -1;
     });
+  }
+
+  // Function for image picker channel
+  static Future<String?> pickImage() async {
+    try {
+      final path = await _imagePickerChannel.invokeMethod<String>('pickImage');
+      return path;
+    } on PlatformException catch (e) {
+      log("Error picking image: ${e.message}");
+      return null;
+    }
   }
 }

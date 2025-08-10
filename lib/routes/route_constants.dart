@@ -5,4 +5,5 @@ class AppRouteConstants {
   static const loginRoute = '/login';
   // Routes For Home Module
   static const homeRoute = '/home';
+  static const recipeDetailsRoute = '/recipeDetails';
 }

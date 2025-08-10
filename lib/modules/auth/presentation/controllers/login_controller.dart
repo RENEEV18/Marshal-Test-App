@@ -16,7 +16,7 @@ class LoginController extends ChangeNotifier {
   AuthEntity get state => _state;
 
   // Private helper to update state
-  void _updateState(AuthEntity newState) {
+  void updateState(AuthEntity newState) {
     _state = newState;
     notifyListeners();
   }
@@ -38,7 +38,7 @@ class LoginController extends ChangeNotifier {
 
   // Controller function for login
   Future<void> loginFn({required BuildContext context}) async {
-    _updateState(
+    updateState(
       _state.copyWith(
         isLoginLoading: true,
       ),
@@ -49,7 +49,7 @@ class LoginController extends ChangeNotifier {
         "password": HelperFunction.checkValue(state.passwordController.text),
       }).then(
         (value) {
-          _updateState(
+          updateState(
             _state.copyWith(
               isLoginLoading: false,
             ),
@@ -68,7 +68,7 @@ class LoginController extends ChangeNotifier {
       if (!context.mounted) return;
       _handleError(context, error);
     } finally {
-      _updateState(
+      updateState(
         _state.copyWith(isLoginLoading: false),
       );
     }
@@ -76,7 +76,7 @@ class LoginController extends ChangeNotifier {
 
   // Controller function for getting user profile
   Future<void> getUserProfile({required BuildContext context}) async {
-    _updateState(
+    updateState(
       _state.copyWith(
         isUserLoading: true,
       ),
@@ -84,7 +84,7 @@ class LoginController extends ChangeNotifier {
     try {
       await _authRepo.getUserRepo().then(
         (value) {
-          _updateState(
+          updateState(
             _state.copyWith(
               isUserLoading: false,
               getUserList: value,
@@ -97,7 +97,7 @@ class LoginController extends ChangeNotifier {
       if (!context.mounted) return;
       _handleError(context, error);
     } finally {
-      _updateState(
+      updateState(
         _state.copyWith(isUserLoading: false),
       );
     }
@@ -120,15 +120,15 @@ class LoginController extends ChangeNotifier {
   void onAuthFieldChange({required String? value, required String type}) {
     if (value == null || value.isEmpty) {
       if (type == "username") {
-        _updateState(_state.copyWith(isUsername: false));
+        updateState(_state.copyWith(isUsername: false));
       } else {
-        _updateState(_state.copyWith(isPassword: false));
+        updateState(_state.copyWith(isPassword: false));
       }
     } else {
       if (type == "username") {
-        _updateState(_state.copyWith(isUsername: true));
+        updateState(_state.copyWith(isUsername: true));
       } else {
-        _updateState(_state.copyWith(isPassword: true));
+        updateState(_state.copyWith(isPassword: true));
       }
     }
   }

@@ -18,13 +18,13 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<HomeControllers>(context, listen: false).getDeviceInfo();
+      Provider.of<HomeController>(context, listen: false).getDeviceInfo();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeControllers>(
+    return Consumer<HomeController>(
       builder: (context, home, child) {
         if (home.state.isDeviceLoading) {
           return const Center(

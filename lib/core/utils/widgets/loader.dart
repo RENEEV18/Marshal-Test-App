@@ -16,3 +16,41 @@ class CommonLoadingWidget extends StatelessWidget {
     );
   }
 }
+
+class LoadingTextWidget extends StatelessWidget {
+  final String text;
+  const LoadingTextWidget({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 10,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CommonLoadingWidget(),
+        Text(text),
+      ],
+    );
+  }
+}
+
+class EmptyWidget extends StatelessWidget {
+  const EmptyWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text("No data found! Something went wrong"),
+      ],
+    );
+  }
+}

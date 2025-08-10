@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeControllers>(
+    return Consumer<HomeController>(
       builder: (context, home, child) {
         return Scaffold(
           appBar: AppBar(

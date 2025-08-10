@@ -14,7 +14,7 @@ class ProviderSetup {
         create: (context) => LoginController(),
       ),
       ChangeNotifierProvider(
-        create: (context) => HomeControllers(),
+        create: (context) => HomeController(),
       ),
     ];
   }

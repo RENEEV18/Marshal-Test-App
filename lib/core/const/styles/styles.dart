@@ -54,7 +54,7 @@ class AppStyle {
 class AppPadding {
   static const scaffoldPadding = EdgeInsets.symmetric(
     horizontal: 20,
-    vertical: 10,
+    vertical: 20,
   );
   static const loginPadding = EdgeInsets.symmetric(
     horizontal: 30,

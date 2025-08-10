@@ -1,52 +1,10 @@
 import 'dart:convert';
 
-GetRecipeModel getRecipeModelFromJson(String str) => GetRecipeModel.fromJson(json.decode(str));
+GetRecipeDetailsModel getRecipeDetailsModelFromJson(String str) => GetRecipeDetailsModel.fromJson(json.decode(str));
 
-String getRecipeModelToJson(GetRecipeModel data) => json.encode(data.toJson());
+String getRecipeDetailsModelToJson(GetRecipeDetailsModel data) => json.encode(data.toJson());
 
-class GetRecipeModel {
-  List<Recipe>? recipes;
-  int? total;
-  int? skip;
-  int? limit;
-
-  GetRecipeModel({
-    this.recipes,
-    this.total,
-    this.skip,
-    this.limit,
-  });
-
-  factory GetRecipeModel.fromJson(Map<String, dynamic> json) => GetRecipeModel(
-        recipes: json["recipes"] == null ? [] : List<Recipe>.from(json["recipes"]!.map((x) => Recipe.fromJson(x))),
-        total: json["total"],
-        skip: json["skip"],
-        limit: json["limit"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "recipes": recipes == null ? [] : List<dynamic>.from(recipes!.map((x) => x.toJson())),
-        "total": total,
-        "skip": skip,
-        "limit": limit,
-      };
-
-  GetRecipeModel copyWith({
-    List<Recipe>? recipes,
-    int? total,
-    int? skip,
-    int? limit,
-  }) {
-    return GetRecipeModel(
-      recipes: recipes ?? this.recipes,
-      total: total ?? this.total,
-      skip: skip ?? this.skip,
-      limit: limit ?? this.limit,
-    );
-  }
-}
-
-class Recipe {
+class GetRecipeDetailsModel {
   int? id;
   String? name;
   List<String>? ingredients;
@@ -64,7 +22,7 @@ class Recipe {
   int? reviewCount;
   List<String>? mealType;
 
-  Recipe({
+  GetRecipeDetailsModel({
     this.id,
     this.name,
     this.ingredients,
@@ -83,7 +41,7 @@ class Recipe {
     this.mealType,
   });
 
-  factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
+  factory GetRecipeDetailsModel.fromJson(Map<String, dynamic> json) => GetRecipeDetailsModel(
         id: json["id"],
         name: json["name"],
         ingredients: json["ingredients"] == null ? [] : List<String>.from(json["ingredients"]!.map((x) => x)),

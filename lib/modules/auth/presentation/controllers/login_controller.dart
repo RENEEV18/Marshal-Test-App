@@ -71,7 +71,6 @@ class LoginController extends ChangeNotifier {
       _updateState(
         _state.copyWith(isLoginLoading: false),
       );
-      notifyListeners();
     }
   }
 
@@ -101,7 +100,6 @@ class LoginController extends ChangeNotifier {
       _updateState(
         _state.copyWith(isUserLoading: false),
       );
-      notifyListeners();
     }
   }
 

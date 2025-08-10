@@ -32,18 +32,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return Consumer<LoginController>(
       builder: (context, login, child) {
         return login.state.isUserLoading
-            ? Column(
-                spacing: 10,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [CommonLoadingWidget(), Text("Loading profile...")],
-              )
+            ? LoadingTextWidget(text: "Loading profile...")
             : login.state.getUserList == null
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Text("No data found! Something went wrong")],
-                  )
+                ? EmptyWidget()
                 : SingleChildScrollView(
                     child: Column(
                       children: [

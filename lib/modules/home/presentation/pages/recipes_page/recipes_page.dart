@@ -8,6 +8,7 @@ import 'package:marshal_test_app/core/utils/widgets/containers.dart';
 import 'package:marshal_test_app/core/utils/widgets/listview.dart';
 import 'package:marshal_test_app/core/utils/widgets/loader.dart';
 import 'package:marshal_test_app/modules/home/presentation/controllers/home_controllers.dart';
+import 'package:marshal_test_app/modules/home/presentation/pages/recipes_page/add_recipe.dart';
 import 'package:marshal_test_app/modules/home/presentation/pages/recipes_page/filter_recipe.dart';
 import 'package:marshal_test_app/routes/route_constants.dart';
 import 'package:provider/provider.dart';
@@ -76,6 +77,7 @@ class _RecipesPageState extends State<RecipesPage> {
                     Row(
                       children: [
                         Expanded(
+                          flex: 6,
                           child: CupertinoSearchTextField(
                             controller: searchController,
                             placeholder: "Search recipes...",
@@ -86,21 +88,41 @@ class _RecipesPageState extends State<RecipesPage> {
                             },
                           ),
                         ),
-                        AppStyle.kWidth10,
-                        IconButton(
-                          icon: const Icon(Icons.filter_list, color: AppColors.primaryColor),
-                          onPressed: () async {
-                            home.initTempFilters();
-                            await showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.white,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                              ),
-                              builder: (_) => FilterBottomSheet(),
-                            );
-                          },
+                        Expanded(
+                          child: IconButton(
+                            icon: const Icon(Icons.filter_list, color: AppColors.primaryColor),
+                            onPressed: () async {
+                              home.initTempFilters();
+                              await showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: AppColors.primaryWhite,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                ),
+                                builder: (_) => FilterBottomSheet(),
+                              );
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: IconButton(
+                            onPressed: () {
+                              home.initAddRecipeForm();
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: AppColors.primaryWhite,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+                                builder: (_) => const AddRecipeBottomSheet(),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.add_circle_outline,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -161,7 +183,7 @@ class _RecipesPageState extends State<RecipesPage> {
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
-                                                        AppNavigation().pop(context: context);
+                                                        home.deleteRecipe(context: context, recipeId: item?.id ?? 0);
                                                       },
                                                       child: const Text(
                                                         'Delete',

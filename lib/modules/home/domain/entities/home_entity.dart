@@ -25,6 +25,21 @@ class HomeEntity {
   final TextEditingController prepController;
   final TextEditingController servingsController;
   final List<TextEditingController> ingredientControllers;
+  final bool isRecipeAddLoading;
+  final bool isRecipeDeleteLoading;
+  final TextEditingController addNameController;
+  final TextEditingController addPrepController;
+  final TextEditingController addCookController;
+  final TextEditingController addServingsController;
+  final TextEditingController addCaloriesController;
+  final TextEditingController addCuisineController;
+  final TextEditingController addDifficultyController;
+  final TextEditingController addTagsController;
+  final TextEditingController addImageController;
+
+  final List<TextEditingController> addIngredientControllers;
+  final List<TextEditingController> addInstructionControllers;
+  final List<String> addSelectedMeals;
   const HomeEntity({
     required this.titles,
     required this.selectedIndex,
@@ -48,6 +63,20 @@ class HomeEntity {
     required this.prepController,
     required this.servingsController,
     required this.ingredientControllers,
+    required this.isRecipeAddLoading,
+    required this.isRecipeDeleteLoading,
+    required this.addNameController,
+    required this.addPrepController,
+    required this.addCookController,
+    required this.addServingsController,
+    required this.addCaloriesController,
+    required this.addCuisineController,
+    required this.addDifficultyController,
+    required this.addTagsController,
+    required this.addImageController,
+    required this.addIngredientControllers,
+    required this.addInstructionControllers,
+    required this.addSelectedMeals,
   });
 
   /// Initial/default state
@@ -81,6 +110,20 @@ class HomeEntity {
       prepController: TextEditingController(),
       servingsController: TextEditingController(),
       ingredientControllers: [TextEditingController()],
+      isRecipeAddLoading: false,
+      isRecipeDeleteLoading: false,
+      addNameController: TextEditingController(),
+      addPrepController: TextEditingController(),
+      addCookController: TextEditingController(),
+      addServingsController: TextEditingController(),
+      addCaloriesController: TextEditingController(),
+      addCuisineController: TextEditingController(),
+      addDifficultyController: TextEditingController(),
+      addTagsController: TextEditingController(),
+      addImageController: TextEditingController(),
+      addIngredientControllers: [TextEditingController()],
+      addInstructionControllers: [TextEditingController()],
+      addSelectedMeals: [],
     );
   }
 
@@ -108,6 +151,20 @@ class HomeEntity {
     TextEditingController? prepController,
     TextEditingController? servingsController,
     List<TextEditingController>? ingredientControllers,
+    bool? isRecipeAddLoading,
+    bool? isRecipeDeleteLoading,
+    TextEditingController? addNameController,
+    TextEditingController? addPrepController,
+    TextEditingController? addCookController,
+    TextEditingController? addServingsController,
+    TextEditingController? addCaloriesController,
+    TextEditingController? addCuisineController,
+    TextEditingController? addDifficultyController,
+    TextEditingController? addTagsController,
+    TextEditingController? addImageController,
+    List<TextEditingController>? addIngredientControllers,
+    List<TextEditingController>? addInstructionControllers,
+    List<String>? addSelectedMeals,
   }) {
     return HomeEntity(
       titles: titles ?? this.titles,
@@ -132,6 +189,20 @@ class HomeEntity {
       prepController: prepController ?? this.prepController,
       servingsController: servingsController ?? this.servingsController,
       ingredientControllers: ingredientControllers ?? this.ingredientControllers,
+      isRecipeAddLoading: isRecipeAddLoading ?? this.isRecipeAddLoading,
+      isRecipeDeleteLoading: isRecipeDeleteLoading ?? this.isRecipeDeleteLoading,
+      addNameController: addNameController ?? this.addNameController,
+      addPrepController: addPrepController ?? this.addPrepController,
+      addCookController: addCookController ?? this.addCookController,
+      addServingsController: addServingsController ?? this.addServingsController,
+      addCaloriesController: addCaloriesController ?? this.addCaloriesController,
+      addCuisineController: addCuisineController ?? this.addCuisineController,
+      addDifficultyController: addDifficultyController ?? this.addDifficultyController,
+      addTagsController: addTagsController ?? this.addTagsController,
+      addImageController: addImageController ?? this.addImageController,
+      addIngredientControllers: addIngredientControllers ?? this.addIngredientControllers,
+      addInstructionControllers: addInstructionControllers ?? this.addInstructionControllers,
+      addSelectedMeals: addSelectedMeals ?? this.addSelectedMeals,
     );
   }
 }

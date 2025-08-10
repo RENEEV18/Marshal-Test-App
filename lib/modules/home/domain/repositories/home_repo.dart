@@ -13,4 +13,8 @@ abstract class HomeRepo {
     required int recipeId,
     required Map<String, dynamic> body,
   });
+  // Repo function to add recipe
+  Future<GetRecipeDetailsModel> addRecipeRepo({required Map<String, dynamic> body});
+  // Repo function to delete recipe
+  Future<dynamic> deleteRecipeRepo({required int recipeId});
 }

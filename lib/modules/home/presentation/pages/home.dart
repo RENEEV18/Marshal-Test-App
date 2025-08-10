@@ -73,7 +73,8 @@ class HomeScreen extends StatelessWidget {
                       },
                     );
                   },
-                )
+                ),
+                BatteryInfo(),
               ],
             ),
           ),

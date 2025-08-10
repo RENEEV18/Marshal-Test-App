@@ -40,7 +40,24 @@ class FilterBottomSheet extends StatelessWidget {
                 ),
               ),
               AppStyle.kHeight20,
-              Text("Filter by Tags", style: Theme.of(context).textTheme.titleMedium),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Filter by Tags",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      AppNavigation().pop(context: context);
+                    },
+                    icon: Icon(
+                      Icons.close,
+                    ),
+                  ),
+                ],
+              ),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,

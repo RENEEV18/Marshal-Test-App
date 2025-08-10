@@ -59,7 +59,7 @@ abstract class HomeServices {
     }
   }
 
-  // Service function to update recipe (PUT)
+  // Service function to update recipe
   Future<http.Response> updateRecipeService({
     required int id,
     required Map<String, dynamic> body,
@@ -75,5 +75,23 @@ abstract class HomeServices {
     } catch (e) {
       rethrow;
     }
+  }
+  // Service function to add recipe
+
+  Future<http.Response> addRecipeService({required Map<String, dynamic> body}) async {
+    final uri = Uri.parse(AppConfig.apiRecipeBaseUrl + AppEndpoints.addRecipe);
+    final response = await http.post(
+      uri,
+      headers: apiHeaders,
+      body: jsonEncode(body),
+    );
+    return response;
+  }
+  // Service function to delete recipe
+
+  Future<http.Response> deleteRecipeService({required int recipeId}) async {
+    final uri = Uri.parse('${AppConfig.apiRecipeBaseUrl}/$recipeId');
+    final response = await http.delete(uri);
+    return response;
   }
 }

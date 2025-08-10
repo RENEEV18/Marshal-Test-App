@@ -11,4 +11,5 @@ class AppEndpoints {
   static const refreshToken = 'refresh';
   // Recipe Endpoints
   static const searchRecipe = '/search';
+  static const addRecipe = '/add';
 }

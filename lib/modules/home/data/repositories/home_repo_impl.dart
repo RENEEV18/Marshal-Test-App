@@ -73,4 +73,36 @@ class HomeRepoImpl extends HomeServices implements HomeRepo {
       rethrow;
     }
   }
+
+  // Repo function to add recipe
+  @override
+  Future<GetRecipeDetailsModel> addRecipeRepo({required Map<String, dynamic> body}) async {
+    try {
+      final response = await addRecipeService(body: body);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        final data = jsonDecode(response.body);
+        return GetRecipeDetailsModel.fromJson(data);
+      } else {
+        throw ApiErrors.handleApiError(response);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Repo function to delete recipe
+  @override
+  Future<dynamic> deleteRecipeRepo({required int recipeId}) async {
+    try {
+      final response = await deleteRecipeService(recipeId: recipeId);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        final data = jsonDecode(response.body);
+        return data;
+      } else {
+        throw ApiErrors.handleApiError(response);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

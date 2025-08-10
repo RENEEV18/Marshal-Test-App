@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marshal_test_app/core/const/colors/colors.dart';
+import 'package:marshal_test_app/core/const/styles/styles.dart';
 import 'package:marshal_test_app/core/utils/widgets/containers.dart';
 import 'package:marshal_test_app/core/utils/widgets/loader.dart';
 import 'package:marshal_test_app/modules/home/presentation/controllers/home_controllers.dart';
@@ -70,9 +71,9 @@ class _RecipesDetailsState extends State<RecipesDetails> {
                                 decoration: const InputDecoration(labelText: 'Recipe name'),
                               )
                             : Text(details?.name ?? '', style: Theme.of(context).textTheme.titleLarge),
-                        const SizedBox(height: 16),
+                        AppStyle.kHeight15,
                         Text('Ingredients', style: Theme.of(context).textTheme.titleMedium),
-                        const SizedBox(height: 8),
+                        AppStyle.kHeight10,
                         isEdit
                             ? Column(
                                 children: [
@@ -90,7 +91,7 @@ class _RecipesDetailsState extends State<RecipesDetails> {
                                                 decoration: InputDecoration(labelText: 'Ingredient ${idx + 1}'),
                                               ),
                                             ),
-                                            const SizedBox(width: 8),
+                                            AppStyle.kWidth10,
                                             IconButton(
                                               icon: const Icon(Icons.close),
                                               onPressed: () => home.removeIngredientField(idx),
@@ -116,7 +117,7 @@ class _RecipesDetailsState extends State<RecipesDetails> {
                                   ),
                                 ),
                               ),
-                        const SizedBox(height: 16),
+                        AppStyle.kHeight15,
                         CommonContainerWithBorder(
                           child: Row(
                             children: [
@@ -129,7 +130,7 @@ class _RecipesDetailsState extends State<RecipesDetails> {
                                       )
                                     : Text('Prep time: ${details?.prepTimeMinutes ?? '-'} minutes'),
                               ),
-                              const SizedBox(width: 12),
+                              AppStyle.kWidth10,
                               Expanded(
                                 child: isEdit
                                     ? TextField(
@@ -142,7 +143,7 @@ class _RecipesDetailsState extends State<RecipesDetails> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        AppStyle.kHeight20,
                       ],
                     ),
                   ),

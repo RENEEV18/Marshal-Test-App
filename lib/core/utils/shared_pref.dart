@@ -15,4 +15,9 @@ class PrefsService {
     }
     return _prefs!;
   }
+
+  // Clear all prefs
+  static Future<void> clearAll() async {
+    await prefs.clear();
+  }
 }

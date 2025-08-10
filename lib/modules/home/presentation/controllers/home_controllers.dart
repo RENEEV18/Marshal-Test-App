@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:marshal_test_app/core/services/method_channel_service.dart';
 import 'package:marshal_test_app/core/utils/errors/error.dart';
 import 'package:marshal_test_app/core/utils/navigation.dart';
+import 'package:marshal_test_app/core/utils/shared_pref.dart';
 import 'package:marshal_test_app/core/utils/snackbar.dart';
 import 'package:marshal_test_app/modules/home/data/models/get_recipe_details.dart';
 import 'package:marshal_test_app/modules/home/data/models/get_recipe_model.dart';
@@ -15,6 +16,7 @@ import 'package:marshal_test_app/modules/home/presentation/pages/device_info_pag
 import 'package:marshal_test_app/modules/home/presentation/pages/pick_image_page/pick_image_page.dart';
 import 'package:marshal_test_app/modules/home/presentation/pages/profile_page/profile_page.dart';
 import 'package:marshal_test_app/modules/home/presentation/pages/recipes_page/recipes_page.dart';
+import 'package:marshal_test_app/routes/route_constants.dart';
 
 class HomeController extends ChangeNotifier {
   final HomeRepo _homeRepo = HomeRepoImpl();
@@ -60,11 +62,17 @@ class HomeController extends ChangeNotifier {
   ];
 
   // Function to change the page index.
-  void changePageIndex({required BuildContext context, required int index}) {
-    updateState(
-      _state.copyWith(selectedIndex: index),
-    );
-    AppNavigation().pop(context: context);
+  void changePageIndex({required BuildContext context, required int index}) async {
+    if (index != 4) {
+      updateState(
+        _state.copyWith(selectedIndex: index),
+      );
+      AppNavigation().pop(context: context);
+    } else {
+      await PrefsService.clearAll();
+      if (!context.mounted) return;
+      AppNavigation().pushNamedRemoveUntil(context: context, route: AppRouteConstants.loginRoute);
+    }
   }
 
   // Function to update search query
@@ -256,6 +264,7 @@ class HomeController extends ChangeNotifier {
       if (!context.mounted) return;
 
       AppSnackbar.show(context, message: "Recipe updated successfully!", type: SnackbarType.success);
+      clearEditRecipeForm();
       getAllRecipe(
         context: context,
         limit: state.limit,
@@ -347,6 +356,178 @@ class HomeController extends ChangeNotifier {
       recipeId: recipeId,
       body: body,
     );
+  }
+
+  void initAddRecipeForm() {
+    // copy existing controllers (they already are in the entity)
+    updateState(_state.copyWith(
+      addNameController: _state.addNameController..text = '',
+      addPrepController: _state.addPrepController..text = '',
+      addCookController: _state.addCookController..text = '',
+      addServingsController: _state.addServingsController..text = '',
+      addCaloriesController: _state.addCaloriesController..text = '',
+      addCuisineController: _state.addCuisineController..text = '',
+      addDifficultyController: _state.addDifficultyController..text = '',
+      addTagsController: _state.addTagsController..text = '',
+      addImageController: _state.addImageController..text = '',
+      addIngredientControllers: [TextEditingController()],
+      addInstructionControllers: [TextEditingController()],
+      addSelectedMeals: [],
+    ));
+  }
+
+  void clearAddRecipeForm() {
+    // dispose controllers safely
+    for (final controller in _state.addIngredientControllers) {
+      controller.dispose();
+    }
+    for (final controller in _state.addInstructionControllers) {
+      controller.dispose();
+    }
+
+    updateState(_state.copyWith(
+      addNameController: TextEditingController(),
+      addPrepController: TextEditingController(),
+      addCookController: TextEditingController(),
+      addServingsController: TextEditingController(),
+      addCaloriesController: TextEditingController(),
+      addCuisineController: TextEditingController(),
+      addDifficultyController: TextEditingController(),
+      addTagsController: TextEditingController(),
+      addImageController: TextEditingController(),
+      addIngredientControllers: [TextEditingController()],
+      addInstructionControllers: [TextEditingController()],
+      addSelectedMeals: [],
+    ));
+  }
+
+  void addRecipeIngredientField() {
+    final updated = List<TextEditingController>.from(_state.addIngredientControllers)..add(TextEditingController());
+    updateState(_state.copyWith(addIngredientControllers: updated));
+  }
+
+  void removeRecipeIngredientField(int index) {
+    final updated = List<TextEditingController>.from(_state.addIngredientControllers);
+    updated[index].dispose();
+    updated.removeAt(index);
+    updateState(_state.copyWith(addIngredientControllers: updated));
+  }
+
+  void addInstructionField() {
+    final updated = List<TextEditingController>.from(_state.addInstructionControllers)..add(TextEditingController());
+    updateState(_state.copyWith(addInstructionControllers: updated));
+  }
+
+  void removeInstructionField(int index) {
+    final updated = List<TextEditingController>.from(_state.addInstructionControllers);
+    updated[index].dispose();
+    updated.removeAt(index);
+    updateState(_state.copyWith(addInstructionControllers: updated));
+  }
+
+  void toggleAddMealType(String meal) {
+    final updated = List<String>.from(_state.addSelectedMeals);
+    if (updated.contains(meal)) {
+      updated.remove(meal);
+    } else {
+      updated.add(meal);
+    }
+    updateState(_state.copyWith(addSelectedMeals: updated));
+  }
+
+  void clearEditRecipeForm() {
+    // Dispose existing ingredient controllers
+    for (final controller in _state.ingredientControllers) {
+      controller.dispose();
+    }
+
+    updateState(_state.copyWith(
+      nameController: TextEditingController(),
+      prepController: TextEditingController(),
+      servingsController: TextEditingController(),
+      ingredientControllers: [TextEditingController()],
+    ));
+  }
+
+  // Build request body from add-form controllers
+  Map<String, dynamic> _buildAddRecipeBody() {
+    final ingredients = _state.addIngredientControllers.map((c) => c.text.trim()).where((s) => s.isNotEmpty).toList();
+    final instructions = _state.addInstructionControllers.map((c) => c.text.trim()).where((s) => s.isNotEmpty).toList();
+    final tags = _state.addTagsController.text.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList();
+
+    return {
+      "name": _state.addNameController.text.trim(),
+      "ingredients": ingredients,
+      "instructions": instructions,
+      "prepTimeMinutes": int.tryParse(_state.addPrepController.text.trim()) ?? 0,
+      "cookTimeMinutes": int.tryParse(_state.addCookController.text.trim()) ?? 0,
+      "servings": int.tryParse(_state.addServingsController.text.trim()) ?? 0,
+      "difficulty": _state.addDifficultyController.text.trim(),
+      "cuisine": _state.addCuisineController.text.trim(),
+      "caloriesPerServing": int.tryParse(_state.addCaloriesController.text.trim()) ?? 0,
+      "tags": tags,
+      "image": _state.addImageController.text.trim(),
+      "mealType": _state.addSelectedMeals,
+    };
+  }
+
+  // Function to add recipe
+  Future<void> addRecipe({required BuildContext context}) async {
+    updateState(_state.copyWith(isRecipeAddLoading: true));
+    try {
+      final body = _buildAddRecipeBody();
+      final added = await _homeRepo.addRecipeRepo(body: body);
+
+      // Option 1: Insert the new recipe into current recipeList (if present)
+      final currentRecipes = List<Recipe>.from(_state.recipeList?.recipes ?? []);
+      currentRecipes.insert(0, Recipe.fromJson(added.toJson())); // convert details->recipe (if needed)
+
+      updateState(_state.copyWith(
+        recipeList: _state.recipeList?.copyWith(recipes: currentRecipes) ?? _state.recipeList,
+        isRecipeAddLoading: false,
+      ));
+
+      if (!context.mounted) return;
+      AppSnackbar.show(context, message: "Recipe added", type: SnackbarType.success);
+      AppNavigation().pop(context: context);
+      clearAddRecipeForm();
+    } catch (error) {
+      if (!context.mounted) return;
+      _handleError(context, error);
+    } finally {
+      updateState(_state.copyWith(isRecipeAddLoading: false));
+    }
+  }
+
+  // Function to Delete recipe  ----------
+  Future<void> deleteRecipe({required BuildContext context, required int recipeId}) async {
+    updateState(_state.copyWith(isRecipeDeleteLoading: true));
+    try {
+      await _homeRepo.deleteRecipeRepo(recipeId: recipeId);
+
+      // Remove from current list if present
+      final updatedList = List<Recipe>.from(_state.recipeList?.recipes ?? []);
+      updatedList.removeWhere((r) => r.id == recipeId);
+
+      updateState(_state.copyWith(
+        recipeList: _state.recipeList?.copyWith(recipes: updatedList),
+        isRecipeDeleteLoading: false,
+      ));
+
+      if (!context.mounted) return;
+      AppSnackbar.show(context, message: "Recipe deleted", type: SnackbarType.success);
+      AppNavigation().pop(context: context);
+      getAllRecipe(
+        context: context,
+        limit: state.limit,
+        skip: state.skip,
+      );
+    } catch (error) {
+      if (!context.mounted) return;
+      _handleError(context, error);
+    } finally {
+      updateState(_state.copyWith(isRecipeDeleteLoading: false));
+    }
   }
 
   void clearSearch(BuildContext context) {

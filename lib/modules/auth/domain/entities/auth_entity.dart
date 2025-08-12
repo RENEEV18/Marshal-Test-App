@@ -9,6 +9,7 @@ class AuthEntity {
   final TextEditingController passwordController;
   final bool isUsername;
   final bool isPassword;
+  final bool obscureText;
 
   const AuthEntity({
     required this.isLoginLoading,
@@ -18,6 +19,7 @@ class AuthEntity {
     required this.passwordController,
     required this.isUsername,
     required this.isPassword,
+    required this.obscureText,
   });
 
   /// Initial/default state
@@ -30,6 +32,7 @@ class AuthEntity {
       passwordController: TextEditingController(),
       isUsername: false,
       isPassword: false,
+      obscureText: true,
     );
   }
 
@@ -42,6 +45,7 @@ class AuthEntity {
     TextEditingController? passwordController,
     bool? isUsername,
     bool? isPassword,
+    bool? obscureText,
   }) {
     return AuthEntity(
       isLoginLoading: isLoginLoading ?? this.isLoginLoading,
@@ -51,6 +55,7 @@ class AuthEntity {
       passwordController: passwordController ?? this.passwordController,
       isUsername: isUsername ?? this.isUsername,
       isPassword: isPassword ?? this.isPassword,
+      obscureText: obscureText ?? this.obscureText,
     );
   }
 }

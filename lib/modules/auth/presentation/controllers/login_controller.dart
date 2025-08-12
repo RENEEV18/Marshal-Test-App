@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:marshal_test_app/core/const/colors/colors.dart';
 import 'package:marshal_test_app/core/utils/errors/error.dart';
 import 'package:marshal_test_app/core/utils/formatter.dart';
 import 'package:marshal_test_app/core/utils/navigation.dart';
@@ -36,6 +37,12 @@ class LoginController extends ChangeNotifier {
     }
   }
 
+  Icon icon = Icon(
+    Icons.visibility_off_outlined,
+    color: AppColors.primaryBlack.withValues(alpha: 0.6),
+    size: 18,
+  );
+
   // Controller function for login
   Future<void> loginFn({required BuildContext context}) async {
     updateState(
@@ -61,6 +68,11 @@ class LoginController extends ChangeNotifier {
             message: "Login successful!",
             type: SnackbarType.success,
           );
+          state.usernameController.clear();
+          state.passwordController.clear();
+          updateState(_state.copyWith(
+            obscureText: true,
+          ));
           AppNavigation().pushNamedRemoveUntil(context: context, route: AppRouteConstants.homeRoute);
         },
       );
@@ -131,5 +143,25 @@ class LoginController extends ChangeNotifier {
         updateState(_state.copyWith(isPassword: true));
       }
     }
+  }
+
+  // Obscure Password Visibility
+  void visibility() {
+    updateState(_state.copyWith(
+      obscureText: !_state.obscureText,
+    ));
+    icon = state.obscureText
+        ? Icon(
+            Icons.visibility_off_outlined,
+            color: AppColors.primaryBlack.withValues(alpha: 0.6),
+            size: 18,
+          )
+        : Icon(
+            Icons.visibility_outlined,
+            color: AppColors.primaryBlack.withValues(alpha: 0.6),
+            size: 18,
+          );
+    notifyListeners();
+    log("visibility : ${state.obscureText}");
   }
 }

@@ -71,6 +71,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomTextFormField(
                         text: "Password",
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        suffix: IconButton(
+                            onPressed: () {
+                              value.visibility();
+                            },
+                            icon: value.icon),
+                        obscureText: value.state.obscureText,
                         controller: value.state.passwordController,
                         validator: (val) {
                           return value.authValidator(value: val, type: "password");
